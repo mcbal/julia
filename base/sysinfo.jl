@@ -192,4 +192,12 @@ function shlib_list()
     dynamic_libraries
 end
 
+function dlpath( handle::Ptr{Void} )
+    return bytestring(ccall( :jl_pathname_for_handle, Ptr{Uint8}, (Ptr{Void},), handle ))
+end
+
+function dlpath( libname::String )
+    return dlpath( dlopen(libname) )
+end
+
 end
